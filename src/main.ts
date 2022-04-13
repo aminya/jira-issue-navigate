@@ -1,17 +1,30 @@
+// ==UserScript==
+// @name         jira-issue-navigate
+// @version      0.2.0
+// @description  Go to the next issue using a button
+// @author       Amin Yahyaabadi
 // @match        https://*.atlassian.net/browse/*
+// @grant        none
+// @license      MIT
+// @namespace    AminYa
+// ==/UserScript==
 
 function main() {
   const currentURL = window.location.href
 
   // parse the URL
-  const urlMatch = /(.*)\.atlassian\.net\/browse\/(.*)-(.*)/
+  const urlMatch = /(.*)\.atlassian\.net\/browse\/(.*)-(\d*)(\?.*)?/
   const res = urlMatch.exec(currentURL)
   // if the url doesn't match return
   if (res === null) {
     return
   }
-  const [, company, project, issue] = res
+  const [, company, project, issue, queries] = res
+
   const issueNumber = parseInt(issue, 10)
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const queriesString = queries === undefined ? "" : queries
 
   // create a button to go to the next issue
   const nextButton = document.createElement("button")
@@ -73,7 +86,7 @@ function main() {
     const nextIssueNumber = issueNumber + 1
 
     // create the next issue url
-    const nextIssueURL = `${company}.atlassian.net/browse/${project}-${nextIssueNumber}`
+    const nextIssueURL = `${company}.atlassian.net/browse/${project}-${nextIssueNumber}${queriesString}`
 
     // navigate to the next issue
     window.location.href = nextIssueURL
