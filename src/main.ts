@@ -10,7 +10,7 @@
 // @namespace    AminYa
 // ==/UserScript==
 
-function main() {
+function praseUrl() {
   const currentURL = window.location.href
 
   // parse the URL
@@ -18,7 +18,7 @@ function main() {
   const res = urlMatch.exec(currentURL)
   // if the url doesn't match return
   if (res === null) {
-    return
+    return null
   }
   const [, company, middle, project, issue, queries] = res
 
@@ -26,6 +26,22 @@ function main() {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const queriesString = queries === undefined ? "" : queries
+
+  return {
+    company,
+    middle,
+    project,
+    issueNumber,
+    queriesString,
+  }
+}
+
+function main() {
+  const parseResult = praseUrl()
+  if (parseResult === null) {
+    return
+  }
+  const { company, middle, project, issueNumber, queriesString } = parseResult
 
   // create a button to go to the next issue
   const nextButton = document.createElement("a")
