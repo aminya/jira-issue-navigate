@@ -63,7 +63,7 @@ function createButton(
 
   // rotate the icon if it's the prev button
   if (direction === "prev") {
-    button.style.rotate = "90deg"
+    button.style.transform = "rotate(180deg) translate(0px, 3px)"
   }
 
   // attach the icon
