@@ -1,7 +1,7 @@
 {
   "name": "jira-issue-navigate",
-  "version": "0.1.0",
-  "description": "Got to the next or previous issue",
+  "version": "0.5.0",
+  "description": "Go to the next/prev issue using buttons",
   "repository": "https://github.com/aminya/jira-issue-navigate",
   "license": "Apache-2.0",
   "author": "Amin Yahyaabadi",
