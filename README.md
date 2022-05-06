@@ -2,6 +2,8 @@
 
 A plugin for Jira that allows going to the next/prev issue using buttons.
 
+![preview](./docs/preview.jpg)
+
 ## Usage
 
 The plugin itself can be installed on the Tampermonkey extension using the following link:
