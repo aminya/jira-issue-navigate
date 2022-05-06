@@ -18,6 +18,10 @@ For example, the chrome extension can be downloaded from [here](https://chrome.g
 
 ## Development
 
+The source code is available at:
+
+https://github.com/aminya/jira-issue-navigate
+
 You can build the project using:
 
 ```
