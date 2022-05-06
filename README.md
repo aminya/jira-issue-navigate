@@ -1,6 +1,6 @@
 # jira-issue-navigate
 
-A plugin for Jira that allows going to the next issue using a button.
+A plugin for Jira that allows going to the next/prev issue using buttons.
 
 ## Usage
 

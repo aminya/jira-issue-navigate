@@ -64,14 +64,11 @@ function createButton(
 
   // rotate the icon if it's the prev button
   if (direction === "prev") {
-    button.style.transform = "rotate(180deg) translate(0px, 3px)"
+    buttonIcon.style.transform = "rotate(180deg) translate(0px, 3px)"
   }
 
   // attach the icon
   button.appendChild(buttonIcon)
-
-  // create a tooltip for the button that shows "Go to next issue" on hover
-  addTooltip(button)
 
   // set the the button class
   const likeButtonSelector = "#jira-issue-header-actions > div > div > div:nth-child(4)"
@@ -94,6 +91,9 @@ function createButton(
   // navigate to the next issue on click
   button.setAttribute("href", issueURL)
 
+  // create a tooltip for the button that shows "Go to next issue" on hover
+  addTooltip(button, direction)
+
   return button
 }
 
@@ -102,7 +102,6 @@ function addTooltip(button: HTMLAnchorElement, direction: "next" | "prev" = "nex
   const buttonTooltip = document.createElement("div")
   buttonTooltip.id = `${direction}-issue-btn-tooltip`
   buttonTooltip.setAttribute("style", `position: relative;`)
-  button.prepend(buttonTooltip)
 
   const buttonTooltipText = document.createElement("div")
   buttonTooltipText.innerHTML = direction[0].toUpperCase() + direction.slice(1)
@@ -136,6 +135,8 @@ function addTooltip(button: HTMLAnchorElement, direction: "next" | "prev" = "nex
     button.style.background = "none"
     buttonTooltipText.style.visibility = "hidden"
   })
+
+  button.prepend(buttonTooltip)
 }
 
 function main() {
