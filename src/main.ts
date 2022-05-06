@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         jira-issue-navigate
-// @version      0.4.0
-// @description  Go to the next issue using a button
+// @version      0.5.0
+// @description  Go to the next/prev issue using buttons
 // @author       Amin Yahyaabadi
 // @match        https://*.atlassian.net/browse/*
 // @match        https://*.atlassian.net/jira/software/projects/*
@@ -60,6 +60,12 @@ function createButton(
 </svg>`
   button.style.background = "none"
   button.style.border = "none"
+
+  // rotate the icon if it's the prev button
+  if (direction === "prev") {
+    button.style.rotate = "90deg"
+  }
+
   // attach the icon
   button.appendChild(buttonIcon)
 
@@ -74,8 +80,16 @@ function createButton(
     button.className = likeButton.className
   }
 
+  // issue number
+  let targetIssueNumber: number
+  if (direction === "next") {
+    targetIssueNumber = issueNumber + 1
+  } else {
+    targetIssueNumber = issueNumber - 1
+  }
+
   // create the next issue url
-  const issueURL = `${company}.atlassian.net/${middle}/${project}-${issueNumber + 1}${queriesString}`
+  const issueURL = `${company}.atlassian.net/${middle}/${project}-${targetIssueNumber}${queriesString}`
   // navigate to the next issue on click
   button.setAttribute("href", issueURL)
 
@@ -132,14 +146,18 @@ function main() {
 
   // create a button to go to the next issue
   const nextButton = createButton(company, middle, project, issueNumber, queriesString, "next")
+  const prevButton = createButton(company, middle, project, issueNumber, queriesString, "prev")
 
-  // attach the button to the toolbar
+  // get the toolbar
   const toolbarSelector = "#jira-issue-header-actions > div > div"
   const toolbar = document.querySelector(toolbarSelector)
   if (toolbar === null) {
     console.debug(`${toolbarSelector} was not found`)
     return
   }
+
+  // attach the button to the toolbar
+  toolbar.prepend(prevButton)
   toolbar.prepend(nextButton)
 }
 
