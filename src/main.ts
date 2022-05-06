@@ -8,6 +8,7 @@
 // @grant        none
 // @license      MIT
 // @namespace    AminYa
+// @homepage https://github.com/aminya/jira-issue-navigate
 // ==/UserScript==
 
 function praseUrl() {
