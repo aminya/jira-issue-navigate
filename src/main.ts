@@ -36,13 +36,13 @@ function praseUrl() {
   }
 }
 
-function main() {
-  const parseResult = praseUrl()
-  if (parseResult === null) {
-    return
-  }
-  const { company, middle, project, issueNumber, queriesString } = parseResult
-
+function createNextButton(
+  company: string,
+  middle: string,
+  project: string,
+  issueNumber: number,
+  queriesString: string
+) {
   // create a button to go to the next issue
   const nextButton = document.createElement("a")
   nextButton.id = "next-issue-btn"
@@ -62,6 +62,26 @@ function main() {
   // attach the icon
   nextButton.appendChild(buttonIcon)
 
+  // create a tooltip for the button that shows "Go to next issue" on hover
+  addTooltip(nextButton)
+
+  // set the the button class
+  const likeButtonSelector = "#jira-issue-header-actions > div > div > div:nth-child(4)"
+  const likeButton = document.querySelector(likeButtonSelector)
+  if (likeButton !== null) {
+    console.debug(`${likeButtonSelector} was not found`)
+    nextButton.className = likeButton.className
+  }
+
+  // create the next issue url
+  const nextIssueURL = `${company}.atlassian.net/${middle}/${project}-${issueNumber + 1}${queriesString}`
+  // navigate to the next issue on click
+  nextButton.setAttribute("href", nextIssueURL)
+
+  return nextButton
+}
+
+function addTooltip(nextButton: HTMLAnchorElement) {
   // create a tooltip for the button that shows "Go to next issue" on hover
   const buttonTooltip = document.createElement("div")
   buttonTooltip.id = "next-issue-btn-tooltip"
@@ -91,19 +111,6 @@ function main() {
   buttonTooltipText.style.visibility = "hidden"
   buttonTooltip.prepend(buttonTooltipText)
 
-  // set the the button class
-  const likeButtonSelector = "#jira-issue-header-actions > div > div > div:nth-child(4)"
-  const likeButton = document.querySelector(likeButtonSelector)
-  if (likeButton !== null) {
-    console.debug(`${likeButtonSelector} was not found`)
-    nextButton.className = likeButton.className
-  }
-
-  // create the next issue url
-  const nextIssueURL = `${company}.atlassian.net/${middle}/${project}-${issueNumber + 1}${queriesString}`
-  // navigate to the next issue on click
-  nextButton.setAttribute("href", nextIssueURL)
-
   nextButton.addEventListener("mouseover", () => {
     nextButton.style.background = "#091e4214"
     buttonTooltipText.style.visibility = "visible"
@@ -113,6 +120,17 @@ function main() {
     nextButton.style.background = "none"
     buttonTooltipText.style.visibility = "hidden"
   })
+}
+
+function main() {
+  const parseResult = praseUrl()
+  if (parseResult === null) {
+    return
+  }
+  const { company, middle, project, issueNumber, queriesString } = parseResult
+
+  // create a button to go to the next issue
+  const nextButton = createNextButton(company, middle, project, issueNumber, queriesString)
 
   // attach the button to the toolbar
   const toolbarSelector = "#jira-issue-header-actions > div > div"
