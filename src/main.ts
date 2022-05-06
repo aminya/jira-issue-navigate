@@ -36,60 +36,61 @@ function praseUrl() {
   }
 }
 
-function createNextButton(
+function createButton(
   company: string,
   middle: string,
   project: string,
   issueNumber: number,
-  queriesString: string
+  queriesString: string,
+  direction: "next" | "prev"
 ) {
   // create a button to go to the next issue
-  const nextButton = document.createElement("a")
-  nextButton.id = "next-issue-btn"
-  nextButton.setAttribute("aria-label", "Go to next issue")
-  nextButton.setAttribute("aria-expanded", "false")
-  nextButton.setAttribute("aria-haspopup", "true")
-  nextButton.setAttribute("type", "button")
-  nextButton.style.borderRadius = "2px"
-  nextButton.style.alignSelf = "center"
-  nextButton.style.padding = "7px"
+  const button = document.createElement("a")
+  button.id = `${direction}-issue-btn`
+  button.setAttribute("aria-label", `Go to ${direction} issue`)
+  button.setAttribute("aria-expanded", "false")
+  button.setAttribute("aria-haspopup", "true")
+  button.setAttribute("type", "button")
+  button.style.borderRadius = "2px"
+  button.style.alignSelf = "center"
+  button.style.padding = "7px"
   const buttonIcon = document.createElement("div")
   buttonIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20.633 20.633" style="enable-background:new 0 0 20.633 20.633" xml:space="preserve">
     <path d="M15.621 9.844 5.971.195A.652.652 0 0 0 5.5 0a.664.664 0 0 0-.473.195l-.013.012a.677.677 0 0 0-.197.475v4.682c0 .178.071.348.197.471l4.481 4.482-4.481 4.479a.667.667 0 0 0-.197.475v4.68c0 .18.071.354.197.475l.013.01a.664.664 0 0 0 .947 0l9.647-9.646a.671.671 0 0 0 0-.946z" />
 </svg>`
-  nextButton.style.background = "none"
-  nextButton.style.border = "none"
+  button.style.background = "none"
+  button.style.border = "none"
   // attach the icon
-  nextButton.appendChild(buttonIcon)
+  button.appendChild(buttonIcon)
 
   // create a tooltip for the button that shows "Go to next issue" on hover
-  addTooltip(nextButton)
+  addTooltip(button)
 
   // set the the button class
   const likeButtonSelector = "#jira-issue-header-actions > div > div > div:nth-child(4)"
   const likeButton = document.querySelector(likeButtonSelector)
   if (likeButton !== null) {
     console.debug(`${likeButtonSelector} was not found`)
-    nextButton.className = likeButton.className
+    button.className = likeButton.className
   }
 
   // create the next issue url
-  const nextIssueURL = `${company}.atlassian.net/${middle}/${project}-${issueNumber + 1}${queriesString}`
+  const issueURL = `${company}.atlassian.net/${middle}/${project}-${issueNumber + 1}${queriesString}`
   // navigate to the next issue on click
-  nextButton.setAttribute("href", nextIssueURL)
+  button.setAttribute("href", issueURL)
 
-  return nextButton
+  return button
 }
 
-function addTooltip(nextButton: HTMLAnchorElement) {
+function addTooltip(button: HTMLAnchorElement, direction: "next" | "prev" = "next") {
   // create a tooltip for the button that shows "Go to next issue" on hover
   const buttonTooltip = document.createElement("div")
-  buttonTooltip.id = "next-issue-btn-tooltip"
+  buttonTooltip.id = `${direction}-issue-btn-tooltip`
   buttonTooltip.setAttribute("style", `position: relative;`)
-  nextButton.prepend(buttonTooltip)
+  button.prepend(buttonTooltip)
 
   const buttonTooltipText = document.createElement("div")
-  buttonTooltipText.innerHTML = "Next"
+  buttonTooltipText.innerHTML = direction[0].toUpperCase() + direction.slice(1)
   buttonTooltipText.setAttribute(
     "style",
     `width: 50px;
@@ -111,13 +112,13 @@ function addTooltip(nextButton: HTMLAnchorElement) {
   buttonTooltipText.style.visibility = "hidden"
   buttonTooltip.prepend(buttonTooltipText)
 
-  nextButton.addEventListener("mouseover", () => {
-    nextButton.style.background = "#091e4214"
+  button.addEventListener("mouseover", () => {
+    button.style.background = "#091e4214"
     buttonTooltipText.style.visibility = "visible"
   })
 
-  nextButton.addEventListener("mouseleave", () => {
-    nextButton.style.background = "none"
+  button.addEventListener("mouseleave", () => {
+    button.style.background = "none"
     buttonTooltipText.style.visibility = "hidden"
   })
 }
@@ -130,7 +131,7 @@ function main() {
   const { company, middle, project, issueNumber, queriesString } = parseResult
 
   // create a button to go to the next issue
-  const nextButton = createNextButton(company, middle, project, issueNumber, queriesString)
+  const nextButton = createButton(company, middle, project, issueNumber, queriesString, "next")
 
   // attach the button to the toolbar
   const toolbarSelector = "#jira-issue-header-actions > div > div"
