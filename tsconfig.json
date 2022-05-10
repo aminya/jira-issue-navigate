@@ -17,6 +17,7 @@
     "preserveSymlinks": true,
     "removeComments": false,
     "lib": ["ES2018", "dom"],
+    "skipLibCheck": true,
     "target": "ES2018",
     "allowJs": true,
     "esModuleInterop": true,
