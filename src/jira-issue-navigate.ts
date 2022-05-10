@@ -1,16 +1,3 @@
-// ==UserScript==
-// @name         jira-issue-navigate
-// @version      0.5.0
-// @description  Go to the next/prev issue using buttons
-// @author       Amin Yahyaabadi
-// @match        https://*.atlassian.net/browse/*
-// @match        https://*.atlassian.net/jira/software/projects/*
-// @grant        none
-// @license      MIT
-// @namespace    AminYa
-// @homepage https://github.com/aminya/jira-issue-navigate
-// ==/UserScript==
-
 import { parseIssueUrl } from "./jira-issue-url"
 // @ts-ignore
 import * as rightArrow from "bundle-text:./right-arrow.svg"
