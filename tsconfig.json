@@ -22,8 +22,8 @@
     "allowJs": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "importHelpers": false,
     "outDir": "./dist"
   },

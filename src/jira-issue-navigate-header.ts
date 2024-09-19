@@ -1,5 +1,9 @@
-import { generate } from "@userscripters/generate-headers/dist/generate"
+import { generate } from "@userscripters/generate-headers/dist/generate.js"
 import { dirname, join } from "path"
+import { readFile, writeFile } from "fs/promises"
+import desm from "desm"
+
+const __dirname = desm(import.meta.url)
 
 async function main() {
   const content = await generate("tampermonkey", {
@@ -11,7 +15,12 @@ async function main() {
     collapse: false,
     eol: "\n",
   })
-  console.log(content)
+
+  const file = join(dirname(__dirname), "dist", "jira-issue-navigate.js");
+
+  // prepend the header to the file
+  const fileContent = await readFile(file, "utf-8")
+  await writeFile(file, `${content}\n${fileContent}`)
 }
 
 main().catch((err) => {
