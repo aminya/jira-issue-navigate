@@ -1,6 +1,6 @@
 {
   "name": "jira-issue-navigate",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Go to the next/prev issue using buttons",
   "homepage": "https://github.com/aminya/jira-issue-navigate",
   "repository": "https://github.com/aminya/jira-issue-navigate",
