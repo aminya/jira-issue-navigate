@@ -1,6 +1,5 @@
 import { parseIssueUrl } from "./jira-issue-url"
-// @ts-ignore
-import * as rightArrow from "bundle-text:./right-arrow.svg"
+import rightArrow from "bundle-text:./right-arrow.svg"
 
 function createButton(
   company: string,
@@ -8,7 +7,7 @@ function createButton(
   project: string,
   issueNumber: number,
   queriesString: string,
-  direction: "next" | "prev"
+  direction: "next" | "prev",
 ) {
   // create a button to go to the next issue
   const button = document.createElement("a")
@@ -21,7 +20,7 @@ function createButton(
   button.style.alignSelf = "center"
   button.style.padding = "7px"
   const buttonIcon = document.createElement("div")
-  buttonIcon.innerHTML = rightArrow as string
+  buttonIcon.innerHTML = rightArrow
   button.style.background = "none"
   button.style.border = "none"
 
@@ -77,14 +76,14 @@ function addTooltip(button: HTMLAnchorElement, direction: "next" | "prev" = "nex
      font-size: small;
      background: #172B4D;
      color: white;
-     
+
      position: absolute;
      z-index: 1;
      bottom: 100%;
      left: 50%;
      margin-left: -30px;
      margin-bottom: 15px;
-     `
+     `,
   )
   buttonTooltipText.style.visibility = "hidden"
   buttonTooltip.prepend(buttonTooltipText)
