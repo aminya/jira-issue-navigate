@@ -1,19 +1,5 @@
-// ==UserScript==
-// @name         jira-issue-navigate
-// @version      0.5.0
-// @description  Go to the next/prev issue using buttons
-// @author       Amin Yahyaabadi
-// @match        https://*.atlassian.net/browse/*
-// @match        https://*.atlassian.net/jira/software/projects/*
-// @grant        none
-// @license      MIT
-// @namespace    AminYa
-// @homepage https://github.com/aminya/jira-issue-navigate
-// ==/UserScript==
-
 import { parseIssueUrl } from "./jira-issue-url"
-// @ts-ignore
-import * as rightArrow from "bundle-text:./right-arrow.svg"
+import rightArrow from "bundle-text:./right-arrow.svg"
 
 function createButton(
   company: string,
@@ -21,7 +7,7 @@ function createButton(
   project: string,
   issueNumber: number,
   queriesString: string,
-  direction: "next" | "prev"
+  direction: "next" | "prev",
 ) {
   // create a button to go to the next issue
   const button = document.createElement("a")
@@ -34,7 +20,7 @@ function createButton(
   button.style.alignSelf = "center"
   button.style.padding = "7px"
   const buttonIcon = document.createElement("div")
-  buttonIcon.innerHTML = rightArrow as string
+  buttonIcon.innerHTML = rightArrow
   button.style.background = "none"
   button.style.border = "none"
 
@@ -90,14 +76,14 @@ function addTooltip(button: HTMLAnchorElement, direction: "next" | "prev" = "nex
      font-size: small;
      background: #172B4D;
      color: white;
-     
+
      position: absolute;
      z-index: 1;
      bottom: 100%;
      left: 50%;
      margin-left: -30px;
      margin-bottom: 15px;
-     `
+     `,
   )
   buttonTooltipText.style.visibility = "hidden"
   buttonTooltip.prepend(buttonTooltipText)

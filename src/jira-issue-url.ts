@@ -13,7 +13,7 @@ export function parseIssueUrl() {
   const issueNumber = parseInt(issue, 10)
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const queriesString = queries === undefined ? "" : queries
+  const queriesString = queries ?? ""
 
   return {
     company,

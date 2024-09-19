@@ -16,3 +16,4 @@ temp-*
 !./dist/setup_cpp.js.map
 .parcel-cache
 exe
+/.*cache
